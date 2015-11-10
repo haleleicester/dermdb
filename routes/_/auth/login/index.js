@@ -1,6 +1,8 @@
-var Error = require('../../../lib/errors/index.js');
-var mysql = require('../../../interfaces/mysql/index.js');
+var Error = require('../../../../lib/errors/index.js');
+var mysql = require('../../../../interfaces/mysql/index.js');
 var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
+var config = require('auto-config');
 
 module.exports = function(req, res, next){
     if (typeof req.body.password !== "undefined" && req.body.email !== "undefined"){
@@ -19,7 +21,16 @@ module.exports = function(req, res, next){
                         e = new Error.AuthError({message:"Failed Login"});
                         next(e);
                     } else {
-                        res.locals.packet = {data: {}, message: "Success"};
+                        var cookie = jwt.sign({
+                            foo: true,
+                            user: {
+                                id: result[0].id
+                            },
+                            date: new Date()
+                        }, config.jwt.salt);
+                        console.log(cookie);
+                        res.cookie('jwt', "yes");
+                        res.locals.packet = {data: {id:result[0].id}, message: "Success"};
                         next();
                     }
                 });

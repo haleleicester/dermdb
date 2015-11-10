@@ -1,4 +1,4 @@
-var mysql = require("../../../interfaces/mysql");
+var mysql = require("../../../../interfaces/mysql");
 var bcrypt = require('bcryptjs');
 var logger = require('jethro');
 var createUser = require('./createUser.js');

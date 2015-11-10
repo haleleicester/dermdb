@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('jethro');
+var favicon = require('serve-favicon');
 
 var routes = require('./routes/index');
 
@@ -19,13 +20,19 @@ app.use(function(req, res, next) {
     next();
 });
 
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger.express);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/lib', express.static(path.join(__dirname, 'bower_components')));
 
 app.use(function(req, res, next){
+    console.log(req.cookies);
     res.locals.metrics = {
         startTime: process.hrtime()
     }; next();

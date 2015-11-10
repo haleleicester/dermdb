@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include resources/head.ejs %>
+</head>
+
+<body>
+
+<% include resources/navbar.ejs %>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>API Playground</h1>
+        <p>Examples and playground for API testing</p>
+        <p>
+            <a class="btn btn-lg btn-primary" href="https://bitbucket.org/plugcloned/docs" role="button">API Documentation &raquo;</a>
+        </p>
+    </div>
+    <h1>Create New Account</h1>
+    <form id="create_account_form">
+        <div class="form-group">
+            <label for="email" class="control-label">Email</label>
+            <input type="text" class="form-control" id="create_email" name="email" value="" required="" title="Please enter you email" placeholder="Email">
+            <span class="help-block"></span>
+        </div>
+        <div class="form-group">
+            <label for="password" class="control-label">Password</label>
+            <input type="password" class="form-control" id="create_password" name="password" value="" required="" title="Please enter your password" placeholder="Password">
+            <span class="help-block"></span>
+        </div>
+        <div class="form-group">
+            <label for="password" class="control-label">Confirm Password</label>
+            <input type="password" class="form-control" id="create_password2" name="password" value="" required="" title="Please confirm password" placeholder="Password">
+            <span class="help-block"></span>
+        </div>
+        <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
+        <button type="submit" class="btn btn-info btn-block">Create Account</button>
+    </form>
+    <br>
+    <h1>Login</h1>
+    <form id="login_form">
+        <div class="form-group">
+            <label for="email" class="control-label">Email</label>
+            <input type="text" class="form-control" id="email" name="email" value="" required="" title="Please enter you email" placeholder="Email">
+            <span class="help-block"></span>
+        </div>
+        <div class="form-group">
+            <label for="password" class="control-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" value="" required="" title="Please enter your password" placeholder="Password">
+            <span class="help-block"></span>
+        </div>
+        <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
+        <button type="submit" class="btn btn-success btn-block">Login</button>
+    </form>
+</div>
+
+<% include resources/scripts.ejs %>
+
+<script>
+    var submit = function(packet, url){
+        Logger("transport", "Ajax", "Sending ajax request to "+url);
+        Logger("transport", "Ajax", "Packet: " + packet);
+        $.ajax({
+            url: "http://localhost:3000" + url,
+            method: "POST",
+            dataType: 'json',
+            data: packet,
+            contentType: "application/json",
+            success: function (data) {
+                Logger("transport", "Ajax", "Response: " + JSON.stringify(data));
+                if (data.status === "ok") {
+                    Logger("success", "Ajax", "POST succeed!")
+                    BootstrapDialog.alert({
+                        title: 'Success',
+                        message: JSON.stringify(data),
+                        type: BootstrapDialog.TYPE_SUCCESS, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+                        closable: true, // <-- Default value is false
+                        draggable: true, // <-- Default value is false
+                        buttonLabel: 'Continue' // <-- Default value is 'OK',
+                    });
+                } else {
+                    console.log(data);
+                    errorHandler(data);
+                }
+            },
+            error: function (e) {
+                errorHandler(e.responseJSON);
+                console.log(e.responseJSON);
+                Logger("error", "Ajax", "An unknown error has occurred... Please try again.");
+            }
+        });
+    };
+    $("#login_form").submit(function (event) {
+        event.preventDefault();
+        url = "/auth/login";
+        Logger("info", "Login", "Submitting form...");
+        var data = {
+            email: $('#email').val(),
+            password: $('#password').val()
+        };
+        var packet = JSON.stringify(data);
+        submit(packet, url);
+        return false;
+    });
+    $("#create_account_form").submit(function (event) {
+        event.preventDefault();
+        url = "/auth/create";
+        Logger("info", "Login", "Submitting form...");
+        var data = {
+            email: $('#create_email').val(),
+            username: $('#create_username').val(),
+            password: $('#create_password').val(),
+            confirmPassword: $('#create_password2').val()
+        };
+        var packet = JSON.stringify(data);
+        submit(packet, url);
+        return false;
+    });
+    function errorHandler(packet){
+        if (typeof packet !== "undefined" && typeof packet.data !== "undefined") {
+                Logger("transport", "Ajax", "Error: " + packet.data.message)
+                BootstrapDialog.alert({
+                    title: 'Error',
+                    message: packet.statusCode + " - " + packet.data.message + ": " + packet.data.description + " (" + packet.data.code + ")",
+                    type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+                    closable: true, // <-- Default value is false
+                    draggable: true, // <-- Default value is false
+                    buttonLabel: 'Continue' // <-- Default value is 'OK',
+                });
+        } else {
+            BootstrapDialog.alert({
+                title: 'Error',
+                message: "An unknown exception has occurred! It is recommended you refresh the page, if you have been served with an error code, please forward this to the developer.",
+                type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+                closable: true, // <-- Default value is false
+                draggable: true, // <-- Default value is false
+                buttonLabel: 'Continue' // <-- Default value is 'OK',
+            });
+        }
+    }
+</script>
+
+</body>
+</html>

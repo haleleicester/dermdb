@@ -1,9 +1,9 @@
-var Error = require('../../../lib/errors/index.js');
+var Error = require('../../../../lib/errors/index.js');
 var logger = require('jethro');
 var check = {
-    email: require('../../../lib/validity/email'),
-    password: require('../../../lib/validity/password'),
-    username: require('../../../lib/validity/username')
+    email: require('../../../../lib/validity/email'),
+    password: require('../../../../lib/validity/password'),
+    username: require('../../../../lib/validity/username')
 };
 
 var createAccount = require('./createAccount.js');
