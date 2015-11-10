@@ -13,7 +13,7 @@
         <h1>API Playground</h1>
         <p>Examples and playground for API testing</p>
         <p>
-            <a class="btn btn-lg btn-primary" href="https://bitbucket.org/plugcloned/docs" role="button">API Documentation &raquo;</a>
+            <a class="btn btn-lg btn-primary" href="#" role="button">API Documentation &raquo;</a>
         </p>
     </div>
     <h1>Create New Account</h1>
@@ -92,7 +92,7 @@
     };
     $("#login_form").submit(function (event) {
         event.preventDefault();
-        url = "/auth/login";
+        url = "/_/auth/login";
         Logger("info", "Login", "Submitting form...");
         var data = {
             email: $('#email').val(),
@@ -104,11 +104,10 @@
     });
     $("#create_account_form").submit(function (event) {
         event.preventDefault();
-        url = "/auth/create";
+        url = "/_/auth/create";
         Logger("info", "Login", "Submitting form...");
         var data = {
             email: $('#create_email').val(),
-            username: $('#create_username').val(),
             password: $('#create_password').val(),
             confirmPassword: $('#create_password2').val()
         };

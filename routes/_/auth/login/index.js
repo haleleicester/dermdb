@@ -21,15 +21,15 @@ module.exports = function(req, res, next){
                         e = new Error.AuthError({message:"Failed Login"});
                         next(e);
                     } else {
-                        var cookie = jwt.sign({
+                        res.cookie('jwt', jwt.sign({
                             foo: true,
                             user: {
                                 id: result[0].id
                             },
                             date: new Date()
-                        }, config.jwt.salt);
-                        console.log(cookie);
-                        res.cookie('jwt', "yes");
+                        }, config.jwt.salt), {
+                            httpOnly: true
+                        });
                         res.locals.packet = {data: {id:result[0].id}, message: "Success"};
                         next();
                     }

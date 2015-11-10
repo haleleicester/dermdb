@@ -4,26 +4,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('jethro');
 var favicon = require('serve-favicon');
-
 var routes = require('./routes/index');
-
 var app = express();
-
 var responder = require('./middleware/responder/index.js');
 var errors = require('./middleware/errors/index.js');
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Origin', req.headers.origin || "*");
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with');
-    next();
-});
-
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); //Uncomment for favicon
 app.use(logger.express);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
