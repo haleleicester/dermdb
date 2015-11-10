@@ -5,9 +5,19 @@ var bodyParser = require('body-parser');
 var logger = require('jethro');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
+
+var responder = require('./middleware/responder/index.js');
+var errors = require('./middleware/errors/index.js');
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Origin', req.headers.origin || "*");
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with');
+    next();
+});
 
 app.use(logger.express);
 app.use(bodyParser.json());
@@ -15,23 +25,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next){
+    res.locals.metrics = {
+        startTime: process.hrtime()
+    }; next();
+});
+
 app.use('/', routes);
-app.use('/users', users);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
-
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
-
+app.use(responder);
+app.use(errors);
 
 module.exports = app;

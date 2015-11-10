@@ -4,9 +4,14 @@
  * Module dependencies.
  */
 
+var _package = require("../package.json");
+var config = require("auto-config");
+config.init(__dirname, "../config");
+config.package = _package;
+
 var app = require('../app');
-var debug = require('debug')('dermdb:server');
 var http = require('http');
+var logger = require('jethro');
 
 /**
  * Get port from environment and store in Express.
@@ -86,5 +91,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  logger('info', 'Express', 'Listening on ' + bind);
 }
