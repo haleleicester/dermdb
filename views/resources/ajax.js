@@ -19,13 +19,13 @@ var submit = function(packet, url, method){
                     draggable: true, // <-- Default value is false
                     buttonLabel: 'Continue', // <-- Default value is 'OK',
                     callback: function(dialog) {
-                        var loc = window.location.href.toString().split(window.location.host)[1];
                         var location = {
                             "/auth/login":"/account",
                             "/auth/logout":"/login",
                             "/auth/create":"/account",
                             "/account":"/problems"
                         };
+                        var loc = location[window.location.href.toString().split(window.location.host)[1]];
                         console.log("Redirecting to: " + loc);
                         window.location.replace(loc);
                     }
