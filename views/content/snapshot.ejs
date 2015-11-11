@@ -1,0 +1,25 @@
+<h1>Submit A New Snapshot</h1>
+<form id="create_snapshot">
+    <div class="form-group">
+        <label for="description" class="control-label">Description</label>
+        <input type="text" class="form-control" id="description" name="description" value="" required=""
+               title="Please enter the description" placeholder="e.g. Turned Red">
+        <span class="help-block"></span>
+    </div>
+    <button type="submit" class="btn btn-success btn-block">Create New Snapshot</button>
+</form>
+<br>
+
+<script>
+    $("#create_snapshot").submit(function (event) {
+        event.preventDefault();
+        url = "/_/snapshot";
+        Logger("info", "Snapshot", "Submitting form...");
+        var data = {
+            type: $('#description').val()
+        };
+        var packet = JSON.stringify(data);
+        submit(packet, url);
+        return false;
+    });
+</script>

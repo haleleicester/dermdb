@@ -19,15 +19,21 @@ var submit = function(packet, url, method){
                     draggable: true, // <-- Default value is false
                     buttonLabel: 'Continue', // <-- Default value is 'OK',
                     callback: function(dialog) {
+                        console.log(data);
+
                         var location = {
+                            "/problem":"/problems/" + data.data.id,
                             "/auth/login":"/account",
-                            "/auth/logout":"/login",
+                            "/auth/logout":"/auth/login",
                             "/auth/create":"/account",
                             "/account":"/problems"
                         };
+
                         var loc = location[window.location.href.toString().split(window.location.host)[1]];
                         console.log("Redirecting to: " + loc);
-                        window.location.replace(loc);
+                        setTimeout(function() {
+                            window.location.replace(loc);
+                        }, 5000);
                     }
                 });
             } else {

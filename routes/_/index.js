@@ -28,4 +28,7 @@ router.use("/images", images);
 var problems = require('./problems.js');
 router.use("/problems", problems);
 
+var problem = require('./problem.js');
+router.use("/problem", problem);
+
 module.exports = router;
