@@ -41,7 +41,7 @@ The API is the one way that data is made accessible, it powers most of the front
 All endpoints begin with `/_/`, then followed by a more descriptive extension, e.g. `/_/auth/create`, which is the endpoint to create an account.
 
 | Endpoint | Function | Method |
---------------------------------
+|----------|----------|--------|
 | /auth/create | Create an account | POST |
 | /auth/login | Login | POST |
 | /auth/logout | Logout | DELETE |
