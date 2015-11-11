@@ -22,6 +22,18 @@ Install node modules
 
 Find the server [here](http://localhost:3000).
 
+### API Documentation
+
+#### Error Responses
+
+```{ [AuthError]
+  status: 'invalidPassword',
+  statusCode: 401,
+  data: 
+   { message: 'Invalid Password',
+     description: 'Password is too common!',
+     code: 'E_INVALID_PASSWORD' } }```
+
 ### Contributors
 * [Sam Mills](https://github.com/hunchmun) (therealhenchman@gmail.com)
 
