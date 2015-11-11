@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 11, 2015 at 11:05 AM
+-- Generation Time: Nov 11, 2015 at 05:25 PM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.6.14
 
@@ -43,8 +43,9 @@ CREATE TABLE `accounts` (
 CREATE TABLE `problems` (
   `id` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
-  `q_lifestyle` varchar(2500) DEFAULT NULL,
-  `q_cancer_history` varchar(2500) DEFAULT NULL
+  `type` varchar(255) NOT NULL,
+  `description` varchar(5000) NOT NULL,
+  `q_lifestyle` varchar(2500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -55,6 +56,7 @@ CREATE TABLE `problems` (
 
 CREATE TABLE `snapshots` (
   `id` varchar(255) NOT NULL,
+  `pid` int(11) NOT NULL,
   `description` varchar(5000) DEFAULT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -97,7 +99,8 @@ ALTER TABLE `problems`
 -- Indexes for table `snapshots`
 --
 ALTER TABLE `snapshots`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `pid` (`pid`);
 
 --
 -- Indexes for table `users`
@@ -114,12 +117,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT for table `problems`
 --
 ALTER TABLE `problems`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
