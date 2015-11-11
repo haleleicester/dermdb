@@ -36,7 +36,7 @@ Find the server [here](http://localhost:3000).
 
 #### Error Responses
 
-```json
+```js
 { [AuthError]
   status: 'invalidPassword',
   statusCode: 401,
