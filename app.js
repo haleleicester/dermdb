@@ -6,6 +6,7 @@ var logger = require('jethro');
 var favicon = require('serve-favicon');
 var routes = require('./routes/index');
 var app = express();
+var format = require('./middleware/auth/format.js');
 var responder = require('./middleware/responder/index.js');
 var errors = require('./middleware/errors/index.js');
 
@@ -20,12 +21,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/lib', express.static(path.join(__dirname, 'bower_components')));
 
 app.use(function(req, res, next){
-    console.log(req.cookies);
     res.locals.metrics = {
         startTime: process.hrtime()
     }; next();
 });
 
+app.use(format);
 app.use('/', routes);
 app.use(responder);
 app.use(errors);

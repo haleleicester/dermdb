@@ -12,10 +12,7 @@ module.exports = function(req, res, next){
             if (err) {
                 e = new Error.MySQLError(err);
                 next(e);
-            } else if (typeof result === "undefined") {
-                e = new Error.AuthError({message:"Failed Login"});
-                next(e);
-            } else {
+            } else if (typeof result[0] !== "undefined" && result.length === 1) {
                 bcrypt.compare(req.body.password, result[0].password, function(err, r) {
                     if (err || !r){
                         e = new Error.AuthError({message:"Failed Login"});
@@ -34,6 +31,9 @@ module.exports = function(req, res, next){
                         next();
                     }
                 });
+            } else {
+                e = new Error.AuthError({message:"Failed Login"});
+                next(e);
             }
         });
     }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 10, 2015 at 04:23 PM
+-- Generation Time: Nov 11, 2015 at 11:05 AM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.6.14
 
@@ -29,6 +29,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `accounts` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `verified` tinyint(1) NOT NULL DEFAULT '0',
+  `verification_code` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -68,8 +70,8 @@ CREATE TABLE `users` (
   `gender` tinyint(1) DEFAULT NULL,
   `dob_year` year(4) DEFAULT NULL,
   `country` varchar(2) DEFAULT NULL,
-  `eye_colour` varchar(255) NOT NULL,
-  `skin_tone` varchar(255) NOT NULL
+  `eye_colour` varchar(255) DEFAULT NULL,
+  `skin_tone` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -80,7 +82,9 @@ CREATE TABLE `users` (
 -- Indexes for table `accounts`
 --
 ALTER TABLE `accounts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `verification_code` (`verification_code`);
 
 --
 -- Indexes for table `problems`
@@ -99,6 +103,7 @@ ALTER TABLE `snapshots`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
@@ -109,7 +114,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `problems`
 --
