@@ -1,23 +1,34 @@
-var submit = function(packet, url){
+var submit = function(packet, url, method){
     Logger("transport", "Ajax", "Sending ajax request to "+url);
     Logger("transport", "Ajax", "Packet: " + packet);
     $.ajax({
         url: "http://localhost:3000" + url,
-        method: "POST",
+        method: method || "POST",
         dataType: 'json',
         data: packet,
         contentType: "application/json",
         success: function (data) {
             Logger("transport", "Ajax", "Response: " + JSON.stringify(data));
             if (data.status === "ok") {
-                Logger("success", "Ajax", "POST succeed!")
+                Logger("success", "Ajax", "POST succeed!");
                 BootstrapDialog.alert({
                     title: 'Success',
                     message: JSON.stringify(data),
                     type: BootstrapDialog.TYPE_SUCCESS, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
                     closable: true, // <-- Default value is false
                     draggable: true, // <-- Default value is false
-                    buttonLabel: 'Continue' // <-- Default value is 'OK',
+                    buttonLabel: 'Continue', // <-- Default value is 'OK',
+                    callback: function(dialog) {
+                        var loc = window.location.href.toString().split(window.location.host)[1];
+                        var location = {
+                            "/auth/login":"/account",
+                            "/auth/logout":"/login",
+                            "/auth/create":"/account",
+                            "/account":"/problems"
+                        };
+                        console.log("Redirecting to: " + loc);
+                        window.location.replace(loc);
+                    }
                 });
             } else {
                 console.log(data);

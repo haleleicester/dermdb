@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var Error = require('../../lib/errors');
 
 router.get('/', function(req, res, next) {
     res.locals.packet = {
@@ -17,5 +18,14 @@ router.use("/auth", auth);
 
 var teapot = require('./teapot/index.js');
 router.use('/teapot', teapot);
+
+var account = require('./account.js');
+router.post('/account', account);
+
+var images = require('./images.js');
+router.use("/images", images);
+
+var problems = require('./problems.js');
+router.use("/problems", problems);
 
 module.exports = router;

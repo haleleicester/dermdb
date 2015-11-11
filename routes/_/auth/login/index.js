@@ -28,7 +28,10 @@ module.exports = function(req, res, next){
                             httpOnly: true
                         });
                         res.locals.packet = {data: {id:result[0].id}, message: "Success"};
-                        next();
+                        res.locals.packet.status = "ok";
+                        var diff = process.hrtime(res.locals.metrics.startTime);
+                        res.locals.packet.time = (diff[0] * 1e9 + diff[1])/1000000;
+                        res.json(res.locals.packet);
                     }
                 });
             } else {

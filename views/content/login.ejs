@@ -14,7 +14,7 @@
     <button type="submit" class="btn btn-success btn-block">Login</button>
 </form>
 <br>
-<button class="btn btn-info btn-block">Sign Up</button>
+<button onclick="window.location.href='/auth/create'" class="btn btn-info btn-block">Sign Up</button>
 <script>
     $("#login_form").submit(function (event) {
         event.preventDefault();

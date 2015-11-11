@@ -6,6 +6,9 @@ var check = {
     username: require('../../../../lib/validity/username')
 };
 
+var jwt = require('jsonwebtoken');
+var config = require('auto-config');
+
 var createAccount = require('./createAccount.js');
 module.exports = function(req, res, next){
     var b = req.body, err;
@@ -38,8 +41,20 @@ module.exports = function(req, res, next){
                     var e = new Error.MySQLError(err);
                     next(e);
                 } else {
-                    res.locals.packet = {data: {uid:result}};
-                    next();
+                    res.cookie('jwt', jwt.sign({
+                        foo: true,
+                        user: {
+                            id: result
+                        },
+                        date: new Date()
+                    }, config.jwt.salt), {
+                        httpOnly: true
+                    });
+                    res.locals.packet = {data: {id:result}, message: "Success"};
+                    res.locals.packet.status = "ok";
+                    var diff = process.hrtime(res.locals.metrics.startTime);
+                    res.locals.packet.time = (diff[0] * 1e9 + diff[1])/1000000;
+                    res.json(res.locals.packet);
                 }
             });
         } else {
