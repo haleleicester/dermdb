@@ -5,20 +5,30 @@ An API for tracking changes in skin conditions.
 ### Installation Instructions
 
 First Clone:
-`git clone https://github.com/haleleicester/dermdb`
+```
+git clone https://github.com/haleleicester/dermdb
+```
 
 Install bower:
-`npm i bower -g`
+```
+npm i bower -g
+```
 
 Install bower components:
-`bower i`
+```
+bower i
+```
 
 Install node modules
-`npm i`
+```
+npm i
+```
 
 ### Run The Server
 
-`node bin/www`
+```
+node bin/www
+```
 
 Find the server [here](http://localhost:3000).
 
@@ -26,13 +36,16 @@ Find the server [here](http://localhost:3000).
 
 #### Error Responses
 
-```{ [AuthError]
+```json
+{ [AuthError]
   status: 'invalidPassword',
   statusCode: 401,
-  data: 
-   { message: 'Invalid Password',
-     description: 'Password is too common!',
-     code: 'E_INVALID_PASSWORD' } }```
+  data: { message: 'Invalid Password',
+    description: 'Password is too common!',
+    code: 'E_INVALID_PASSWORD' 
+  } 
+}
+```
 
 ### Contributors
 * [Sam Mills](https://github.com/hunchmun) (therealhenchman@gmail.com)
