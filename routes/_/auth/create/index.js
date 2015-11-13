@@ -38,6 +38,7 @@ module.exports = function(req, res, next){
             //Create the account
             createAccount(b, function(err, result){
                 if (err){
+                    console.log(err);
                     var e = new Error.MySQLError(err);
                     next(e);
                 } else {

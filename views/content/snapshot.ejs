@@ -16,8 +16,10 @@
         url = "/_/snapshot";
         Logger("info", "Snapshot", "Submitting form...");
         var data = {
-            type: $('#description').val()
+            description: $('#description').val(),
+            pid: window.location.href.toString().split(window.location.host + "/snapshot/submit?id=")[1]
         };
+        console.log(data);
         var packet = JSON.stringify(data);
         submit(packet, url);
         return false;

@@ -31,4 +31,7 @@ router.use("/problems", problems);
 var problem = require('./problem.js');
 router.use("/problem", problem);
 
+var snapshot = require('./snapshots.js');
+router.use("/snapshot", snapshot);
+
 module.exports = router;

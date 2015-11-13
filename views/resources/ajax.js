@@ -22,7 +22,7 @@ var submit = function(packet, url, method){
                         console.log(data);
 
                         var location = {
-                            "/problem":"/problems/" + data.data.id,
+                            "/problem/submit":"/problem/" + data.data.id,
                             "/auth/login":"/account",
                             "/auth/logout":"/auth/login",
                             "/auth/create":"/account",

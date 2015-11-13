@@ -35,7 +35,6 @@ app.use(function(req, res, next){
     }; next();
 });
 app.use('/ip', function(req, res, next){
-    res.send('10.10.7.139');
 });
 app.use(format);
 app.use('/', routes);

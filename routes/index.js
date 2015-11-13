@@ -48,7 +48,7 @@ router.get("/problems", function(req, res, next){
 }).get("/problem/:id", function(req, res, next){
     console.log(req.params.id);
     mysql.query("SELECT * FROM snapshots WHERE pid = " + req.params.id + " AND uid = " + res.locals.user.id, function(err, result){
-        res.render("index", {page:"snapshots", data:result})
+        res.render("index", {page: "snapshots", data: result, pid: req.params.id})
     })
 });
 
