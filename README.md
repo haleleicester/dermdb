@@ -76,7 +76,7 @@ All endpoints begin with `/_/`, then followed by a more descriptive extension, e
 ```
 
 ### Contributors
-* [Sam Mills](https://github.com/hunchmun) (therealhenchman@gmail.com)
+* Sam Mills
 * Jillian Pawlyn
 
 Copyright (C) HALE 2015. Licensed under MIT & GPL2
